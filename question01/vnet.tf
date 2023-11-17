@@ -1,6 +1,7 @@
-resource "azurerm_virtual_network" "vnet" {
-  name                = "vnet01"
-  location            = azurerm_resource_group.rg01.location
-  resource_group_name = azurerm_resource_group.rg01.name
-  address_space       = ["10.0.0.0/16"]
+resource "azurerm_virtual_network" "vmss" {
+ name                = var.azurerm_virtual_network
+ address_space       = ["10.0.0.0/16"]
+ location            = var.location
+ resource_group_name = azurerm_resource_group.vmss.name
+ tags                = var.tags
 }

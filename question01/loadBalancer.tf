@@ -1,37 +1,37 @@
-resource "azurerm_lb" "lb01" {
-  name                = "lb01"
-  location            = azurerm_resource_group.rg01.location
-  resource_group_name = azurerm_resource_group.rg01.name
+resource "azurerm_lb" "vmss" {
+ name                = "vmss-lb"
+ location            = var.location
+ resource_group_name = azurerm_resource_group.vmss.name
 
-  frontend_ip_configuration {
-    name                 = "PublicIPAddress"
-    public_ip_address_id = azurerm_public_ip.publicip.id
-  }
+ frontend_ip_configuration {
+   name                 = "PublicIPAddress"
+   public_ip_address_id = azurerm_public_ip.vmss.id
+ }
+
+ tags = var.tags
 }
 
 resource "azurerm_lb_backend_address_pool" "bpepool" {
-  loadbalancer_id = azurerm_lb.lb01.id
-  name            = "BackEndAddressPool"
-  
+#  resource_group_name = azurerm_resource_group.vmss.name
+ loadbalancer_id     = azurerm_lb.vmss.id
+ name                = "BackEndAddressPool"
 }
 
-resource "azurerm_lb_nat_pool" "lbnatpool" {
-  resource_group_name            = azurerm_resource_group.rg01.name
-  name                           = "ssh"
-  loadbalancer_id                = azurerm_lb.lb01.id
-  protocol                       = "Tcp"
-  frontend_port_start            = 50000
-  frontend_port_end              = 50119
-  backend_port                   = 22
-  frontend_ip_configuration_name = "PublicIPAddress"
+resource "azurerm_lb_probe" "vmss" {
+#  resource_group_name = azurerm_resource_group.vmss.name
+ loadbalancer_id     = azurerm_lb.vmss.id
+ name                = "ssh-running-probe"
+ port                = 80
 }
 
-resource "azurerm_lb_probe" "example" {
-  loadbalancer_id = azurerm_lb.lb01.id
-  name            = "http-probe"
-  protocol        = "Http"
-  request_path    = "/"
-  port            = 80
+resource "azurerm_lb_rule" "lbnatrule" {
+  #  resource_group_name            = azurerm_resource_group.vmss.name
+   loadbalancer_id                = azurerm_lb.vmss.id
+   name                           = "http"
+   protocol                       = "Tcp"
+   frontend_port                  = 80
+   backend_port                   = 80
+  #  backend_address_pool_id        = azurerm_lb_backend_address_pool.bpepool.id
+   frontend_ip_configuration_name = "PublicIPAddress"
+   probe_id                       = azurerm_lb_probe.vmss.id
 }
-
-

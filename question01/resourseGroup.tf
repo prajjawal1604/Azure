@@ -1,5 +1,5 @@
-# Create a resource group
-resource "azurerm_resource_group" "rg01" {
-  name     = "question01-rg"
-  location = "Central India"
+resource "azurerm_resource_group" "vmss" {
+ name     = var.resource_group_name
+ location = var.location
+ tags     = var.tags
 }
