@@ -41,8 +41,8 @@ locals {
 
 ## NSG Inbound Rules for DBTier Subnet
 resource "azurerm_network_security_rule" "db_nsg_rule_inbound" {
-  for_each                    = local.db_inbound_ports_map
-#   for_each                    = var.ports
+  for_each = local.db_inbound_ports_map
+  #   for_each                    = var.ports
   name                        = "db-nsg-rule-inbound-${each.value}"
   priority                    = each.key
   direction                   = "Inbound"
