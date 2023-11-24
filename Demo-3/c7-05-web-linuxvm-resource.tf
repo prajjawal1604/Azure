@@ -41,6 +41,5 @@ resource "azurerm_linux_virtual_machine" "web_linuxvm" {
     version   = "latest"
   }
   custom_data = filebase64("${path.module}/app-scripts/redhat-webvm-script.sh")
-#   custom_data = base64encode(local.webvm_custom_data)
-
+  #   custom_data = base64encode(local.webvm_custom_data)
 }
