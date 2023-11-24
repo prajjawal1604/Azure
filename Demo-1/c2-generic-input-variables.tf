@@ -1,5 +1,4 @@
 #Generic Input Variables
-
 #Bussiness Division
 variable "Bussiness_Division" {
   description = "Business Division in the large organization"

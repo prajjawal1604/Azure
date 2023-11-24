@@ -30,9 +30,19 @@ locals {
   }
 }
 
+# variable "ports" {
+#   type = map(string)
+#   default = {
+#     "100" : "3306", #If the key start with a number, then we need to : instead of =
+#     "110" : "1433",
+#     "120" : "5432"
+#   }
+# }
+
 ## NSG Inbound Rules for DBTier Subnet
 resource "azurerm_network_security_rule" "db_nsg_rule_inbound" {
   for_each                    = local.db_inbound_ports_map
+#   for_each                    = var.ports
   name                        = "db-nsg-rule-inbound-${each.value}"
   priority                    = each.key
   direction                   = "Inbound"
