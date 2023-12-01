@@ -172,10 +172,10 @@ resource "azurerm_monitor_autoscale_setting" "web_vmss_autoscale" {
       minimum = 4
       maximum = 20
     }
-    Recurrence {
+    recurrence {
       timezone = "Indian Standard Time"
       days     = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"]
-      hourd    = [0]
+      hours   = [0]
       minutes  = [0]
     }
     ## Rule-1: Percentage CPU
@@ -316,10 +316,10 @@ resource "azurerm_monitor_autoscale_setting" "web_vmss_autoscale" {
       minimum = 3
       maximum = 6
     }
-    Recurrence {
+    recurrence {
       timezone = "Indian Standard Time"
       days     = ["Saturday", "Sunday"]
-      hourd    = [0]
+      hours    = [0]
       minutes  = [0]
     }
     ## Rule-1: Percentage CPU
@@ -452,13 +452,5 @@ resource "azurerm_monitor_autoscale_setting" "web_vmss_autoscale" {
     # }
   }
   ##End Of Profile-3
-
-
-
-
-
-
-
-
 
 }
