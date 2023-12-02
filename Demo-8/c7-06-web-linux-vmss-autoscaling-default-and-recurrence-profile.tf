@@ -173,7 +173,7 @@ resource "azurerm_monitor_autoscale_setting" "web_vmss_autoscale" {
       maximum = 20
     }
     recurrence {
-      timezone = "Indian Standard Time"
+      timezone = "India Standard Time"
       days     = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"]
       hours   = [0]
       minutes  = [0]
@@ -317,7 +317,7 @@ resource "azurerm_monitor_autoscale_setting" "web_vmss_autoscale" {
       maximum = 6
     }
     recurrence {
-      timezone = "Indian Standard Time"
+      timezone = "India Standard Time"
       days     = ["Saturday", "Sunday"]
       hours    = [0]
       minutes  = [0]
