@@ -15,7 +15,7 @@ resource "azurerm_private_dns_zone_virtual_network_link" "private_dns_zone_vnet_
 # Resource-3: Create A Record in Private DNS A Zone
 resource "azurerm_private_dns_a_record" "private_dns_a_record" {
   depends_on          = [azurerm_lb.app_lb]
-  name                = "test"
+  name                = "applb"
   zone_name           = azurerm_private_dns_zone.private_dns_zone.name
   resource_group_name = azurerm_resource_group.rg.name
   ttl                 = 300
