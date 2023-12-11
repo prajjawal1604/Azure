@@ -10,10 +10,6 @@ locals {
     sudo systemctl disable firewalld
     sudo chmod -R 777 /var/www/html
     sudo echo "Hello World from $(hostname)" > /var/www/html/index.html
-    sudo mkdir /var/www/html/app1
-    sudo echo "Hello World from $(hostname -f)" > /var/www/html/app1/index.html
-    sudo echo "WebVM App1 - AppStatus Page" > /var/www/html/app1/AppStatus.html
-    sudo echo '<!DOCTYPE html> <html> <body style="background-color:rgb(255, 255, 0);"> <h1>WebVM App1 - AppStatus Page</h1> <p>App1 is running on WebVM App1</p> </body> </html>' > /var/www/html/app1/AppStatus.html
     CUSTOM_DATA
 }
 
@@ -24,12 +20,14 @@ resource "azurerm_linux_virtual_machine_scale_set" "web_vmss" {
   location             = azurerm_resource_group.rg.location
   resource_group_name  = azurerm_resource_group.rg.name
   sku                  = "Standard_DS1_v2"
-  instances            = 2
+  instances            = 1
   admin_username       = "azureuser"
   admin_ssh_key {
     username   = "azureuser"
     public_key = file("${path.module}/ssh-keys/keys.pub")
   }
+  # admin_password = "Passowrd"
+  # disable_password_authentication = false
   os_disk {
     caching              = "ReadWrite"
     storage_account_type = "Standard_LRS"
@@ -40,7 +38,6 @@ resource "azurerm_linux_virtual_machine_scale_set" "web_vmss" {
     sku       = "83-gen2"
     version   = "latest"
   }
-
 
   upgrade_mode = "Automatic"
 
@@ -56,7 +53,7 @@ resource "azurerm_linux_virtual_machine_scale_set" "web_vmss" {
     }
   }
 
-  custom_data = filebase64("${path.module}/app-scripts/redhat-webvm-script.sh")
-  # custom_data = base64encode(local.webvm_custom_data)
+  # custom_data = filebase64("${path.module}/app-scripts/redhat-webvm-script.sh")
+  custom_data = base64encode(local.webvm_custom_data)
 
 }

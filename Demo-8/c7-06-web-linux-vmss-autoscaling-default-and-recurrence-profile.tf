@@ -25,8 +25,8 @@ resource "azurerm_monitor_autoscale_setting" "web_vmss_autoscale" {
   profile {
     name = "defaultProfile"
     capacity {
-      default = 2
-      minimum = 2
+      default = 1
+      minimum = 1
       maximum = 6
     }
     ## Rule-1: Percentage CPU
@@ -72,48 +72,48 @@ resource "azurerm_monitor_autoscale_setting" "web_vmss_autoscale" {
       }
     }
 
-    ## Rule-2: Available Memory Bytes
-    # Scale-Out Rule
-    rule {
-      metric_trigger {
-        metric_name        = "Available Memory Bytes"
-        metric_resource_id = azurerm_linux_virtual_machine_scale_set.web_vmss.id
-        metric_namespace   = "microsoft.compute/virtualmachinescalesets"
-        time_grain         = "PT1M"
-        statistic          = "Average"
-        time_window        = "PT5M"
-        time_aggregation   = "Average"
-        operator           = "LessThan"
-        threshold          = 7107341824
-      }
-      scale_action {
-        direction = "Increase"
-        type      = "ChangeCount"
-        value     = "1"
-        cooldown  = "PT5M"
-      }
-    }
+    # ## Rule-2: Available Memory Bytes
+    # # Scale-Out Rule
+    # rule {
+    #   metric_trigger {
+    #     metric_name        = "Available Memory Bytes"
+    #     metric_resource_id = azurerm_linux_virtual_machine_scale_set.web_vmss.id
+    #     metric_namespace   = "microsoft.compute/virtualmachinescalesets"
+    #     time_grain         = "PT1M"
+    #     statistic          = "Average"
+    #     time_window        = "PT5M"
+    #     time_aggregation   = "Average"
+    #     operator           = "LessThan"
+    #     threshold          = 7107341824
+    #   }
+    #   scale_action {
+    #     direction = "Increase"
+    #     type      = "ChangeCount"
+    #     value     = "1"
+    #     cooldown  = "PT5M"
+    #   }
+    # }
 
-    # Scale-In Rule
-    rule {
-      metric_trigger {
-        metric_name        = "Available Memory Bytes"
-        metric_resource_id = azurerm_linux_virtual_machine_scale_set.web_vmss.id
-        metric_namespace   = "microsoft.compute/virtualmachinescalesets"
-        time_grain         = "PT1M"
-        statistic          = "Average"
-        time_window        = "PT5M"
-        time_aggregation   = "Average"
-        operator           = "GreaterThan"
-        threshold          = 2147483648
-      }
-      scale_action {
-        direction = "Decrease"
-        type      = "ChangeCount"
-        value     = "1"
-        cooldown  = "PT5M"
-      }
-    }
+    # # Scale-In Rule
+    # rule {
+    #   metric_trigger {
+    #     metric_name        = "Available Memory Bytes"
+    #     metric_resource_id = azurerm_linux_virtual_machine_scale_set.web_vmss.id
+    #     metric_namespace   = "microsoft.compute/virtualmachinescalesets"
+    #     time_grain         = "PT1M"
+    #     statistic          = "Average"
+    #     time_window        = "PT5M"
+    #     time_aggregation   = "Average"
+    #     operator           = "GreaterThan"
+    #     threshold          = 2147483648
+    #   }
+    #   scale_action {
+    #     direction = "Decrease"
+    #     type      = "ChangeCount"
+    #     value     = "1"
+    #     cooldown  = "PT5M"
+    #   }
+    # }
 
     # ## Rule-3: LB SYN Count Metric Rule
     # # Scale-Out Rule
@@ -221,48 +221,48 @@ resource "azurerm_monitor_autoscale_setting" "web_vmss_autoscale" {
       }
     }
 
-    ## Rule-2: Available Memory Bytes
-    # Scale-Out Rule
-    rule {
-      metric_trigger {
-        metric_name        = "Available Memory Bytes"
-        metric_resource_id = azurerm_linux_virtual_machine_scale_set.web_vmss.id
-        metric_namespace   = "microsoft.compute/virtualmachinescalesets"
-        time_grain         = "PT1M"
-        statistic          = "Average"
-        time_window        = "PT5M"
-        time_aggregation   = "Average"
-        operator           = "LessThan"
-        threshold          = 7107341824
-      }
-      scale_action {
-        direction = "Increase"
-        type      = "ChangeCount"
-        value     = "1"
-        cooldown  = "PT5M"
-      }
-    }
+    # ## Rule-2: Available Memory Bytes
+    # # Scale-Out Rule
+    # rule {
+    #   metric_trigger {
+    #     metric_name        = "Available Memory Bytes"
+    #     metric_resource_id = azurerm_linux_virtual_machine_scale_set.web_vmss.id
+    #     metric_namespace   = "microsoft.compute/virtualmachinescalesets"
+    #     time_grain         = "PT1M"
+    #     statistic          = "Average"
+    #     time_window        = "PT5M"
+    #     time_aggregation   = "Average"
+    #     operator           = "LessThan"
+    #     threshold          = 7107341824
+    #   }
+    #   scale_action {
+    #     direction = "Increase"
+    #     type      = "ChangeCount"
+    #     value     = "1"
+    #     cooldown  = "PT5M"
+    #   }
+    # }
 
-    # Scale-In Rule
-    rule {
-      metric_trigger {
-        metric_name        = "Available Memory Bytes"
-        metric_resource_id = azurerm_linux_virtual_machine_scale_set.web_vmss.id
-        metric_namespace   = "microsoft.compute/virtualmachinescalesets"
-        time_grain         = "PT1M"
-        statistic          = "Average"
-        time_window        = "PT5M"
-        time_aggregation   = "Average"
-        operator           = "GreaterThan"
-        threshold          = 2147483648
-      }
-      scale_action {
-        direction = "Decrease"
-        type      = "ChangeCount"
-        value     = "1"
-        cooldown  = "PT5M"
-      }
-    }
+    # # Scale-In Rule
+    # rule {
+    #   metric_trigger {
+    #     metric_name        = "Available Memory Bytes"
+    #     metric_resource_id = azurerm_linux_virtual_machine_scale_set.web_vmss.id
+    #     metric_namespace   = "microsoft.compute/virtualmachinescalesets"
+    #     time_grain         = "PT1M"
+    #     statistic          = "Average"
+    #     time_window        = "PT5M"
+    #     time_aggregation   = "Average"
+    #     operator           = "GreaterThan"
+    #     threshold          = 2147483648
+    #   }
+    #   scale_action {
+    #     direction = "Decrease"
+    #     type      = "ChangeCount"
+    #     value     = "1"
+    #     cooldown  = "PT5M"
+    #   }
+    # }
 
     # ## Rule-3: LB SYN Count Metric Rule
     # # Scale-Out Rule
@@ -365,48 +365,48 @@ resource "azurerm_monitor_autoscale_setting" "web_vmss_autoscale" {
       }
     }
 
-    ## Rule-2: Available Memory Bytes
-    # Scale-Out Rule
-    rule {
-      metric_trigger {
-        metric_name        = "Available Memory Bytes"
-        metric_resource_id = azurerm_linux_virtual_machine_scale_set.web_vmss.id
-        metric_namespace   = "microsoft.compute/virtualmachinescalesets"
-        time_grain         = "PT1M"
-        statistic          = "Average"
-        time_window        = "PT5M"
-        time_aggregation   = "Average"
-        operator           = "LessThan"
-        threshold          = 7107341824
-      }
-      scale_action {
-        direction = "Increase"
-        type      = "ChangeCount"
-        value     = "1"
-        cooldown  = "PT5M"
-      }
-    }
+    # ## Rule-2: Available Memory Bytes
+    # # Scale-Out Rule
+    # rule {
+    #   metric_trigger {
+    #     metric_name        = "Available Memory Bytes"
+    #     metric_resource_id = azurerm_linux_virtual_machine_scale_set.web_vmss.id
+    #     metric_namespace   = "microsoft.compute/virtualmachinescalesets"
+    #     time_grain         = "PT1M"
+    #     statistic          = "Average"
+    #     time_window        = "PT5M"
+    #     time_aggregation   = "Average"
+    #     operator           = "LessThan"
+    #     threshold          = 7107341824
+    #   }
+    #   scale_action {
+    #     direction = "Increase"
+    #     type      = "ChangeCount"
+    #     value     = "1"
+    #     cooldown  = "PT5M"
+    #   }
+    # }
 
-    # Scale-In Rule
-    rule {
-      metric_trigger {
-        metric_name        = "Available Memory Bytes"
-        metric_resource_id = azurerm_linux_virtual_machine_scale_set.web_vmss.id
-        metric_namespace   = "microsoft.compute/virtualmachinescalesets"
-        time_grain         = "PT1M"
-        statistic          = "Average"
-        time_window        = "PT5M"
-        time_aggregation   = "Average"
-        operator           = "GreaterThan"
-        threshold          = 2147483648
-      }
-      scale_action {
-        direction = "Decrease"
-        type      = "ChangeCount"
-        value     = "1"
-        cooldown  = "PT5M"
-      }
-    }
+    # # Scale-In Rule
+    # rule {
+    #   metric_trigger {
+    #     metric_name        = "Available Memory Bytes"
+    #     metric_resource_id = azurerm_linux_virtual_machine_scale_set.web_vmss.id
+    #     metric_namespace   = "microsoft.compute/virtualmachinescalesets"
+    #     time_grain         = "PT1M"
+    #     statistic          = "Average"
+    #     time_window        = "PT5M"
+    #     time_aggregation   = "Average"
+    #     operator           = "GreaterThan"
+    #     threshold          = 2147483648
+    #   }
+    #   scale_action {
+    #     direction = "Decrease"
+    #     type      = "ChangeCount"
+    #     value     = "1"
+    #     cooldown  = "PT5M"
+    #   }
+    # }
 
     # ## Rule-3: LB SYN Count Metric Rule
     # # Scale-Out Rule
