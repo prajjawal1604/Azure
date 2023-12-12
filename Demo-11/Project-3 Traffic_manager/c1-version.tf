@@ -20,7 +20,7 @@ provider "azurerm" {
 terraform {
   backend "azurerm" {
     resource_group_name  = "terraform-storage-rg"
-    storage_account_name = "terraformstate7"
+    storage_account_name = "terraformstate70"
     container_name       = "terraformstatecont"
     key                  = "project-3-traffic-manager.tfstate"
   }
