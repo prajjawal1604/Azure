@@ -26,6 +26,7 @@ locals {
   ag_inbound_ports_map = {
     "100" : "22", #If the key start with a number, then we need to : instead of =
     "110" : "80"
+    "120" : "65200-65535"
   }
 }
 
