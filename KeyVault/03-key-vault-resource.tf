@@ -1,8 +1,8 @@
 
 resource "azurerm_key_vault" "key-vault" {
   name                = "key-vault-prajjawal-1"
-  location            = azurerm_resource_group.example.location
-  resource_group_name = azurerm_resource_group.example.name
+  location            = azurerm_resource_group.key-vault-rg.location
+  resource_group_name = azurerm_resource_group.key-vault-rg.name
   tenant_id           = data.azurerm_client_config.current.tenant_id
   sku_name            = "premium"
 
