@@ -5,6 +5,16 @@ resource "azurerm_key_vault" "key-vault" {
   resource_group_name = azurerm_resource_group.key-vault-rg.name
   tenant_id           = data.azurerm_client_config.current.tenant_id
   sku_name            = "premium"
+  contact {
+    name = "Prajjawal Pandit"
+    email = "panditprajjawal@gmail.com"
+    phone = "9173058119"
+  }
+  contact {
+    name = "Prajjawal Pandit"
+    email = "prajj1604@gmail.com"
+    phone = "9173058119"
+  }
 
   access_policy {
     tenant_id = data.azurerm_client_config.current.tenant_id
@@ -55,4 +65,7 @@ resource "azurerm_key_vault" "key-vault" {
       "Set",
     ]
   }
+
+  #  Add Issuance Policy to Key Vault to notify before 30 days if the certificate is about to expire
+  
 }

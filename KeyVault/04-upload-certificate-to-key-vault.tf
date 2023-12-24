@@ -5,5 +5,7 @@ resource "azurerm_key_vault_certificate" "key-vault-prajjawal2" {
   certificate {
     contents = filebase64("C:\\Users\\prajjawal\\Desktop\\testCert.pfx")
     password = "Password123@"
+    
   }
+  
 }
