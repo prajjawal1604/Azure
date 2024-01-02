@@ -89,7 +89,7 @@ resource "azurerm_application_gateway" "web_ag" {
   }
   request_routing_rule {
     name                       = local.request_routing_rule_name
-    priority = 100
+    priority                   = 100
     rule_type                  = "Basic"
     http_listener_name         = local.listener_name
     backend_address_pool_name  = local.backend_address_pool_name_app1
