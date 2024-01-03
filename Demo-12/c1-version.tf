@@ -16,14 +16,14 @@ provider "azurerm" {
 }
 
 
-# terraform State storage to azure storage account
-terraform {
-  backend "azurerm" {
-    resource_group_name  = "terraform-storage-rg"
-    storage_account_name = "terraformstate70"
-    container_name       = "terraformstatecont"
-    key                  = "project-1-centralus.tfstate"
-  }
-}
+# # terraform State storage to azure storage account
+# terraform {
+#   backend "azurerm" {
+#     resource_group_name  = "terraform-storage-rg"
+#     storage_account_name = "terraformstate70"
+#     container_name       = "terraformstatecont"
+#     key                  = "project-1-centralus.tfstate"
+#   }
+# }
 
 

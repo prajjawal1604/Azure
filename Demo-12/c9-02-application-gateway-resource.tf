@@ -67,7 +67,7 @@ resource "azurerm_application_gateway" "web_ag" {
   backend_http_settings {
     name                  = local.http_setting_name_app1
     cookie_based_affinity = "Disabled"
-    # path = "/app1"
+    # path = "/app1/"
     port            = 80
     protocol        = "Http"
     request_timeout = 60
