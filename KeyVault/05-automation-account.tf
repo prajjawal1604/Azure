@@ -1,13 +1,13 @@
 # Schedule Azure Automation Runbook to monitor certificate expiry
 resource "azurerm_automation_account" "cert_monitor_automation_account" {
-  name                = "cert-monitor-automation-account"
+  name                = "cert-monitor-automation-account-prajjawal"
   resource_group_name = azurerm_resource_group.key-vault-rg.name
   location            = azurerm_resource_group.key-vault-rg.location
   sku_name            = "Basic"
 }
 
 resource "azurerm_automation_runbook" "cert_expiry_monitor_runbook" {
-  name                    = "CertExpiryMonitorRunbook"
+  name                    = "CertExpiryMonitorRunbook-prajjawal"
   resource_group_name     = azurerm_resource_group.key-vault-rg.name
   automation_account_name = azurerm_automation_account.cert_monitor_automation_account.name
 
