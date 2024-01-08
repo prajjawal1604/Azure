@@ -1,56 +1,35 @@
-# this is a powershell script that will check the expiry date of a certificate and send an email if it is within the specified number of days
+# Ensures you do not inherit an AzContext in your runbook
+Disable-AzContextAutosave -Scope Process
 
-param (
-    [string]$keyVaultName = "key-vault-prajjawal-1",
-    [string]$keyVaultResourceGroup = "key-vault-resources",
-    [string]$emailRecipient = "prajj1604@gmail.com",
-    [int]$daysBeforeExpiry = 30
-)
+# Connect to Azure with system-assigned managed identity
+$AzureContext = (Connect-AzAccount -Identity).context
 
-# Sign in to Azure (you may need to provide credentials)
-Connect-AzAccount
 
-try
-{
-    "Logging in to Azure..."
-    Connect-AzAccount -Identity
+# Set and store context
+$AzureContext = Set-AzContext -SubscriptionName $AzureContext.Subscription -DefaultProfile $AzureContext
+"Step 1"
+# Select the subscription
+Select-AzSubscription -SubscriptionId "e5609048-0982-48ec-ba90-1372beb02d39"
 
-}
-catch {
+# Get all Key Vaults in the subscription
+$keyVaults = Get-AzKeyVault
 
-    "Catch Block Starts here"   
-    Write-Error -Message $_.Exception
-    throw $_.Exception
+# Define the 'near to expiration' period (in days)
+$expirationPeriod = 30
 
-}
+# Iterate over each Key Vault
+foreach ($keyVault in $keyVaults) {
+    # Get all certificates in the Key Vault
+    $certificates = Get-AzKeyVaultCertificate -VaultName $keyVault.VaultName
 
-# Get the certificates from Azure Key Vault
-$certificates = Get-AzKeyVaultCertificate -VaultName $keyVaultName -ResourceGroupName $keyVaultResourceGroup
+    # Iterate over each certificate
+    foreach ($certificate in $certificates) {
+        # Get the number of days to expiration
+        $daysToExpiration = ($certificate.Expires - (Get-Date)).Days
 
-foreach ($certificate in $certificates) {
-    # Get the certificate details
-    $certificateDetails = Get-AzKeyVaultCertificate -VaultName $keyVaultName -Name $certificate.Name -Version $certificate.Version
-
-    # Calculate the expiry date
-    $expiryDate = $certificateDetails.Attributes.Expires
-
-    # Calculate the threshold date
-    $thresholdDate = (Get-Date).AddDays($daysBeforeExpiry)
-
-    # Check if the certificate is about to expire
-    if ($expiryDate -lt $thresholdDate) {
-        # Certificate is within the specified number of days before expiry, send email
-        # $subject = "Certificate Expiry Alert"
-        # $body = "The certificate $($certificateDetails.Name) is expiring on $($expiryDate). Please renew or replace it."
-
-        # $smtpServer = "your.smtp.server"
-        # $smtpFrom = "sender@example.com"
-        # $smtpCredential = Get-Credential
-
-        # Send-MailMessage -SmtpServer $smtpServer -Port 587 -UseSsl -Credential $smtpCredential -From $smtpFrom -To $emailRecipient -Subject $subject -Body $body
-
-        Write-Output "Certificate $($certificateDetails.Name) is expiring on $($expiryDate). Please renew or replace it."
-    } else {
-        Write-Output "Certificate $($certificateDetails.Name) is not within the specified number of days before expiry. No action required."
+        # Check if the certificate is near to expiration
+        if ($daysToExpiration -le $expirationPeriod) {
+            Write-Output "Certificate $($certificate.Name) in Key Vault $($keyVault.VaultName) is due to expire in $daysToExpiration day(s)"
+        }
     }
 }
