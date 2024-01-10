@@ -2,6 +2,10 @@ variable "subscriptionId" {
   type        = string
   description = "The Subscription Id for the account"
 }
+variable "apiUrl" {
+  type        = string
+  description = "The API URL from the logic app to trigger mail notification"
+}
 
 locals {
   runbook_code = <<EOT
@@ -46,7 +50,7 @@ locals {
               } | ConvertTo-Json
 
               # Invoke the API
-              $apiUrl = "https://prod-19.eastus.logic.azure.com:443/workflows/68bfbc4a675f4fa99eefc8e0e4ae7d6d/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=EbLz79GRJxXZ4Z6YLAnkPI3ONdmNBRffYZlDE2SxiCk"
+              $apiUrl = "${var.apiUrl}"
               Invoke-RestMethod -Uri $apiUrl -Method Post -Body $apiPayload -ContentType "application/json"
 
           }
