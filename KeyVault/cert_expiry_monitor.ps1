@@ -9,7 +9,7 @@ $AzureContext = (Connect-AzAccount -Identity).context
 $AzureContext = Set-AzContext -SubscriptionName $AzureContext.Subscription -DefaultProfile $AzureContext
 "Step 1"
 # Select the subscription
-Select-AzSubscription -SubscriptionId "e5609048-0982-48ec-ba90-1372beb02d39"
+Select-AzSubscription -SubscriptionId "f97f1556-45cc-49f4-a648-1f4ad9fde44e"
 
 # Get all Key Vaults in the subscription
 $keyVaults = Get-AzKeyVault
@@ -30,6 +30,18 @@ foreach ($keyVault in $keyVaults) {
         # Check if the certificate is near to expiration
         if ($daysToExpiration -le $expirationPeriod) {
             Write-Output "Certificate $($certificate.Name) in Key Vault $($keyVault.VaultName) is due to expire in $daysToExpiration day(s)"
+                        # Prepare payload for the API
+            $apiPayload = @{
+                "CertName"= $certificate.Name
+                "ExpDate"=  "$daysToExpiration Left to Expire" 
+                "KeyVaultName"= $keyVault.VaultName
+                "RgName" = "RG - Name"
+            } | ConvertTo-Json
+
+            # Invoke the API
+            $apiUrl = "https://prod-19.eastus.logic.azure.com:443/workflows/68bfbc4a675f4fa99eefc8e0e4ae7d6d/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=EbLz79GRJxXZ4Z6YLAnkPI3ONdmNBRffYZlDE2SxiCk"
+            Invoke-RestMethod -Uri $apiUrl -Method Post -Body $apiPayload -ContentType "application/json"
+
         }
     }
 }
