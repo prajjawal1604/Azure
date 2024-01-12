@@ -41,7 +41,8 @@ locals {
           # Check if the certificate is near to expiration
           if ($daysToExpiration -le $expirationPeriod) {
               Write-Output "Certificate $($certificate.Name) in Key Vault $($keyVault.VaultName) is due to expire in $daysToExpiration day(s)"
-                          # Prepare payload for the API
+
+              # Prepare payload for the API
               $apiPayload = @{
                   "CertName"= $certificate.Name
                   "ExpDate"=  "$daysToExpiration Left to Expire" 
