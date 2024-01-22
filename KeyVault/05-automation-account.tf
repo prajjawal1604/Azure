@@ -67,7 +67,7 @@ resource "azurerm_automation_account" "cert_monitor_automation_account" {
   resource_group_name = azurerm_resource_group.key-vault-rg.name
   location            = azurerm_resource_group.key-vault-rg.location
   sku_name            = "Basic"
-  identity{
+  identity {
     type = "SystemAssigned"
   }
 }
@@ -82,7 +82,7 @@ resource "azurerm_automation_runbook" "cert_expiry_monitor_runbook" {
   log_progress = "true"
   runbook_type = "PowerShell"
   # content      = file("${path.module}/cert_expiry_monitor.ps1")
-  content      = local.runbook_code
+  content = local.runbook_code
 }
 
 # # Schedule the runbook to run once a week

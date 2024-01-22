@@ -6,10 +6,10 @@ terraform {
     }
   }
   backend "azurerm" {
-      resource_group_name  = "Infopractice"
-      storage_account_name = "terraformstate1prajjawal"
-      container_name       = "tfstate"
-      key                  = "keyVault.tfstate"
+    resource_group_name  = "Infopractice"
+    storage_account_name = "terraformstate1prajjawal"
+    container_name       = "tfstate"
+    key                  = "keyVault.tfstate"
   }
 
 }

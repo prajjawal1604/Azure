@@ -5,16 +5,16 @@ resource "azurerm_key_vault" "key-vault" {
   tenant_id           = data.azurerm_client_config.current.tenant_id
   sku_name            = "premium"
   contact {
-    name = "Prajjawal Pandit"
+    name  = "Prajjawal Pandit"
     email = "panditprajjawal@gmail.com"
     phone = "9173058119"
   }
   contact {
-    name = "Prajjawal Pandit"
+    name  = "Prajjawal Pandit"
     email = "prajj1604@gmail.com"
     phone = "9173058119"
   }
-# Provide access to the service principal of Automation Account to access and get all the certificated in the keyvault 
+  # Provide access to the service principal of Automation Account to access and get all the certificated in the keyvault 
   access_policy {
     tenant_id = data.azurerm_client_config.current.tenant_id
     object_id = azurerm_automation_account.cert_monitor_automation_account.identity[0].principal_id
@@ -24,5 +24,5 @@ resource "azurerm_key_vault" "key-vault" {
       "List"
     ]
   }
-  
+
 }
